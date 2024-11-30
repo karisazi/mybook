@@ -1,0 +1,484 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+</head>
+<body>
+    <div class="fixed right-5 left-3 flex justify-between items-center border-b-1 border-gray-100 shadow-sm bg-white">
+        <img class="w-[130px] mx-5 my-4 flex-shrink-0" src="{% static 'assets/logo.png' %}">
+        <div class="w-[220px] flex flex-shrink-0 justify-between ml-8">
+            <p>Home</p>
+            <p>Favorite</p>
+            <p>Upload</p>
+        </div>
+
+        <!-- dropdown search box-->
+        <div class="flex-1 flex ml-14 mr-20 justify-center items-center max-w-[1000px] transition-all">
+            <!-- Dropdown Button -->
+            <div class="relative text-sm" id="dropdownButton">
+                <div onclick="toggleDropdown()" 
+                    class="w-[100px] flex justify-between items-center rounded-l-[200px] border-yellow-200 shadow-sm border-solid border-2 px-2 py-1 z-1 bg-yellow-50">
+                    <div class="flex-1 flex justify-center">
+                        <span id="dropdownLabel">All</span> <!-- Dropdown Label -->
+                    </div>
+                    <img width="8" src="{% static 'assets/svg-icon/arrow-down.svg' %}">
+                </div>
+                
+                <!-- Dropdown Menu -->
+                <div id="dropdown" 
+                    class="rounded border-[1px] border-gray-200 shadow-sm border-solid absolute top-[40px] hidden">
+                    <div onclick="selectOption('All')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">All</div>
+                    <div onclick="selectOption('Title')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Title</div>
+                    <div onclick="selectOption('Year')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Year</div>
+                    <div onclick="selectOption('Description')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Description</div>
+                </div>
+            </div>
+            
+            <!-- Input Field -->
+            <div class="relative w-full max-w-[500px]">
+                <!-- Input Field -->
+                <input 
+                    class="w-full px-4 py-1 text-sm 
+                           focus:outline-none focus:ring-2 focus:ring-yellow-100 
+                           shadow-sm border border-yellow-300 rounded-r-[200px] 
+                           focus:border-yellow-300 text-[13px] pr-10 border-l-0 focus:border-l-2"
+                    type="text" 
+                    placeholder="Search">
+                
+                <!-- Search Icon -->
+                <img 
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2" 
+                    width="16" 
+                    src="{% static 'assets/svg-icon/search-icon.svg' %}" 
+                    alt="Search Icon">
+            </div>
+            
+        </div>
+
+        <div class="flex items-center">
+            <img class="w-[32px] h-[32px] rounded-full flex-shrink-0 z-10" src="{% static 'assets/blank-profile-picture.png' %}">
+            <div class="relative text-sm " id="userDropdownButton">
+                <div onclick="toggleUserDropdown()" 
+                    class="flex justify-between border-solid border-gray-200 border-2 rounded-r-[200px] px-4 py-1 -ml-[10px]  mr-5 duration-200">
+                    <span id="dropdownLabel">User</span> <!-- Dropdown Label -->
+                    <img class="ml-2" width="8" src="{% static 'assets/svg-icon/arrow-down.svg' %}">
+                </div>
+                
+                <!-- Dropdown Menu -->
+                <div id="userdropdown" 
+                    class="rounded border-[1px] border-gray-200 border-solid absolute top-[40px] shadow-sm hidden">
+                    <div class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Profile</div>
+                    <div class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Logout</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+
+    <!-- library page  -->
+
+
+    <div class="grid grid-cols-[400px_1fr_400px] gap-4 pt-20">
+
+        <!-- Left Column -->
+
+        <div class="ml-4 p-5 font-sans">
+            <p class="font-semibold text-lg">Filter Books</p>
+            <P class="text-sm text-gray-700"> Filter your books shelf</P>
+            <div class="relative text-sm pt-5" id="filterDropdownButton">
+                <div onclick="toggleFilterDropdown()" 
+                    class="w-[300px] flex justify-between items-center rounded-sm border-gray-200 shadow-sm border-solid border-2 px-2 py-1 z-1 bg-gray-50">
+                    <div class="flex-1 flex">
+                        <span id="filterDropdownLabel">All</span> <!-- Dropdown Label -->
+                    </div>
+                    <img width="8" src="{% static 'assets/svg-icon/arrow-down.svg' %}">
+                </div>
+                
+                <!-- Dropdown Menu -->
+                <div id="filterDropdown" 
+                    class="rounded border-[1px] bg-white border-gray-200 shadow-sm border-solid absolute top-[55px] hidden">
+                    <div onclick="selectFilter('All')" class="w-[298px] cursor-pointer hover:bg-gray-100 px-2 py-2">All</div>
+                    <div onclick="selectFilter('Favorite')" class="w-[298px] cursor-pointer hover:bg-gray-100 px-2 py-2">Favorite</div>
+                </div>
+            </div>
+
+
+
+            <p class="font-semibold pt-12 pb-5 text-lg">Explore</p>
+            <div class="grid grid-cols-3 gap-sm">
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/education.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Academic Education</p>
+                          <p class="text-gray-500 text-xs">Expand knowledge.</p>
+                      </div>
+                    </div>
+                </label>
+
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/art.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Art</p>
+                          <p class="text-gray-500 text-xs">Creative inspiration and techniques.</p>
+                      </div>
+                    </div>
+                </label>
+
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/biography.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Biography</p>
+                          <p class="text-gray-500 text-xs">Life stories of remarkable people.</p>
+                      </div>
+                    </div>
+                </label>
+
+
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/business.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Business Career</p>
+                          <p class="text-gray-500 text-xs">Strategies for work finance</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/children.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Children Youth</p>
+                          <p class="text-gray-500 text-xs">Stories and fun for kids.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/environment.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Environment </p>
+                          <p class="text-gray-500 text-xs">Explore and protect nature.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/fiction.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Fiction & Literature</p>
+                          <p class="text-gray-500 text-xs">Imaginative stories.</p>
+                      </div>
+                    </div>
+                </label>
+
+                
+
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/health.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Health & Fitness</p>
+                          <p class="text-gray-500 text-xs">Guide for healthcare.</p>
+                      </div>
+                    </div>
+                </label>
+
+
+                
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/lifestyle.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Lifestyle</p>
+                          <p class="text-gray-500 text-xs">Tips for living your best life.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/lifestyle.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Personal Growth</p>
+                          <p class="text-gray-500 text-xs">Develop skills and self-awareness.</p>
+                      </div>
+                    </div>
+                </label>
+
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/politics.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Politics & Laws</p>
+                          <p class="text-gray-500 text-xs">Insights on governance and rights.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/religion.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Religion</p>
+                          <p class="text-gray-500 text-xs">Beliefs, spirituality, and faith.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/science.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Science & Research</p>
+                          <p class="text-gray-500 text-xs">Ideas and discoveries.</p>
+                      </div>
+                    </div>
+                </label>
+
+                <label class="cursor-pointer">
+                    <input type="radio" class="peer sr-only" name="pricing" />
+                    <div class="w-[100px] max-w-xl mb-3 rounded-md bg-white p-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-yellow-600 peer-checked:ring-yellow-500 peer-checked:ring-offset-2">
+                      <div class="flex flex-col gap-1">
+                        <div class="flex justify-between">
+                            <img class="w-10 h-10" src="{% static 'assets/explore-icon/technology.png' %}">
+                            <div>
+                                <svg width="20" height="20" viewBox="0 0 24 20"><path fill="currentColor" d="m10.6 13.8l-2.175-2.175q-.275-.275-.675-.275t-.7.3q-.275.275-.275.7q0 .425.275.7L9.9 15.9q.275.275.7.275q.425 0 .7-.275l5.675-5.675q.275-.275.275-.675t-.3-.7q-.275-.275-.7-.275q-.425 0-.7.275ZM12 22q-2.075 0-3.9-.788q-1.825-.787-3.175-2.137q-1.35-1.35-2.137-3.175Q2 14.075 2 12t.788-3.9q.787-1.825 2.137-3.175q1.35-1.35 3.175-2.138Q9.925 2 12 2t3.9.787q1.825.788 3.175 2.138q1.35 1.35 2.137 3.175Q22 9.925 22 12t-.788 3.9q-.787 1.825-2.137 3.175q-1.35 1.35-3.175 2.137Q14.075 22 12 22Z" /></svg>
+                              </div>
+                        </div>
+                          <p class="text-sm font-semibold mt-2">Technology</p>
+                          <p class="text-gray-500 text-xs">Advances in tech and innovation.</p>
+                      </div>
+                    </div>
+                </label>
+
+            </div>
+            
+        </div>
+    
+        <!-- Middle Column -->
+
+        <div class="grid grid-cols-1 gap-4 font-sans-auto h-96">
+            <!-- Book 1 -->
+            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 mt-10 hover:bg-gray-50">
+                <img class="w-36 h-52 shadow-sm" src="{% static 'assets/book-1.jpg' %}" alt="Book Image">
+                <div class="flex flex-col justify-between p-5 flex-grow">
+                    <div class="flex justify-between">
+                        <p class="font-bold text-xl line-clamp-2 overflow-hidden text-gray-900">
+                            You Are a Badass: How to Stop Doubting Your Greatness and Start Living an Awesome Life
+                        </p>
+                        <img class="ml-2 active:-red-600" width="25" src="{% static 'assets/svg-icon/heart-icon.svg' %}" alt="Heart Icon">
+                    </div>
+                    <p class="text-gray-700 mt-1">Jen Sincero</p>
+                    <p class="text-sm text-gray-600 mt-2 line-clamp-3 overflow-hidden">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nostrum, neque similique animi ratione nisi blanditiis deserunt iusto voluptate amet velit quidem perferendis numquam perspiciatis ut, earum, nam eligendi qui?
+                    </p>
+                </div>
+            </div>
+            <!-- Book 2 -->
+            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 mt-2 hover:bg-gray-50">
+                <img class="w-36 h-52 shadow-sm" src="{% static 'assets/book-2.jpg' %}" alt="Book Image">
+                <div class="flex flex-col justify-between p-5 flex-grow">
+                    <div class="flex justify-between">
+                        <p class="font-bold text-xl line-clamp-2 overflow-hidden text-gray-900">
+                            Winter in Tokyo
+                        </p>
+                        <img class="ml-2 active:-red-600" width="25" src="{% static 'assets/svg-icon/heart-icon.svg' %}" alt="Heart Icon">
+                    </div>
+                    <p class="text-gray-700 mt-1">Ilana Tan</p>
+                    <p class="text-sm text-gray-600 mt-2 line-clamp-3 overflow-hidden">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nostrum, neque similique animi ratione nisi blanditiis deserunt iusto voluptate amet velit quidem perferendis numquam perspiciatis ut, earum, nam eligendi qui?
+                    </p>
+                </div>
+            </div>
+            <!-- Book 3 -->
+            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 mt-2 hover:bg-gray-50">
+                <img class="w-36 h-52 shadow-sm" src="{% static 'assets/book-3.jpg' %}" alt="Book Image">
+                <div class="flex flex-col justify-between p-5 flex-grow">
+                    <div class="flex justify-between">
+                        <p class="font-bold text-xl line-clamp-2 overflow-hidden text-gray-900">
+                            Summer in Seoul
+                        </p>
+                        <img class="ml-2 active:-red-600" width="25" src="{% static 'assets/svg-icon/heart-icon.svg' %}" alt="Heart Icon">
+                    </div>
+                    <p class="text-gray-700 mt-1">Ilana Tan</p>
+                    <p class="text-sm text-gray-600 mt-2 line-clamp-3 overflow-hidden">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nostrum, neque similique animi ratione nisi blanditiis deserunt iusto voluptate amet velit quidem perferendis numquam perspiciatis ut, earum, nam eligendi qui?
+                    </p>
+                </div>
+            </div>
+                        <!-- Book 3 -->
+            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 mt-2 hover:bg-gray-50">
+                <img class="w-36 h-52 shadow-sm" src="{% static 'assets/book-3.jpg' %}" alt="Book Image">
+                <div class="flex flex-col justify-between p-5 flex-grow">
+                    <div class="flex justify-between">
+                        <p class="font-bold text-xl line-clamp-2 overflow-hidden text-gray-900">
+                            Summer in Seoul
+                        </p>
+                        <img class="ml-2 active:-red-600" width="25" src="{% static 'assets/svg-icon/heart-icon.svg' %}" alt="Heart Icon">
+                    </div>
+                    <p class="text-gray-700 mt-1">Ilana Tan</p>
+                    <p class="text-sm text-gray-600 mt-2 line-clamp-3 overflow-hidden">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nostrum, neque similique animi ratione nisi blanditiis deserunt iusto voluptate amet velit quidem perferendis numquam perspiciatis ut, earum, nam eligendi qui?
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+
+        
+    
+        <!-- Right Column -->
+        <div class="fixed top-32 right-28 h-[calc(h-screen)-100px]">
+            <img class="h-full w-72 object-cover" src="{% static 'assets/mybook-poster.png' %}" alt="Book Poster">
+          </div>
+          
+          
+    </div>
+    
+        
+        <script>
+            let isDropdownOpen = false;
+
+            // Function to toggle the dropdown menu
+            function toggleDropdown() {
+                const dropdown = document.getElementById('dropdown');
+                isDropdownOpen = !isDropdownOpen; // Update the state
+                dropdown.classList.toggle('hidden', !isDropdownOpen); // Show/hide dropdown
+            }
+        
+            // Function to select a dropdown option and update the label
+            function selectOption(option) {
+                const dropdownLabel = document.getElementById('dropdownLabel');
+                dropdownLabel.textContent = option; // Update label with selected option
+                toggleDropdown(); // Hide dropdown after selection
+            }
+        
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (event) {
+                const dropdownButton = document.getElementById('dropdownButton');
+                const dropdown = document.getElementById('dropdown');
+        
+                // Check if the click is outside the dropdown container
+                if (!dropdownButton.contains(event.target) && isDropdownOpen) {
+                    dropdown.classList.add('hidden'); // Hide dropdown
+                    isDropdownOpen = false; // Update the state
+                }
+            });
+
+            function toggleUserDropdown() {
+                const userdropdown = document.getElementById('userdropdown');
+                userdropdown.classList.toggle('hidden');
+            }
+
+
+            function toggleFilterDropdown() {
+                const filterDropdown = document.getElementById('filterDropdown');
+                filterDropdown.classList.toggle('hidden');
+            }
+
+            function selectFilter(filter) {
+                const filterDropdownLabel = document.getElementById('filterDropdownLabel');
+                filterDropdownLabel.textContent = filter; // Update label with selected option
+                toggleFilterDropdown(); // Hide dropdown after selection
+            }
+        </script>
+        
+</body>
+</html>

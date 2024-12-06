@@ -1,0 +1,34 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified - MyBooK</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="h-screen w-screen bg-cover bg-center" 
+    style="background-size: cover; background-repeat: no-repeat; background-position: center; background-image: url('{% static 'assets/bg/bg1.jpg' %}');">
+    <div class="flex items-center justify-center h-screen">
+        <div class="flex:1 flex flex-col shadow-lg hover:shadow-xl rounded-md bg-white p-10 items-center w-[400px] h-[630px]">
+            <img class="w-[170px]" src="{% static 'assets/logo.png' %}" alt="Logo">
+            <p class="mt-8 text-gray-600 text-md">Verification</p>
+            <p class="text-gray-400 text-sm mt-2">Thank you</p>
+            <p class="font-semibold text-sm mt-10">Your account registered successfully</p>
+            <img width="110" class="mt-20" src="{% static 'assets/svg-icon/check-round.svg' %}">
+         
+            <button class="bg-yellow-400 text-white rounded-md w-full py-2 mt-11 text-sm font-semibold">
+                Login
+            </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

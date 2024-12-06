@@ -1,0 +1,40 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyBooK</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="h-screen w-screen bg-cover bg-center" 
+    style="background-size: cover; background-repeat: no-repeat; background-position: center; background-image: url('{% static 'assets/bg/bg1.jpg' %}');">
+    <div class="flex items-center justify-center h-screen">
+        <div class="flex:1 flex flex-col shadow-lg hover:shadow-xl rounded-md bg-white p-10 items-center w-[400px] h-[630px]">
+            <img class="w-[170px]" src="{% static 'assets/logo.png' %}" alt="Logo">
+            <p class="font-semibold mt-12 text-gray-800 text-lg">Welcome Back !</p>
+            <p class="text-gray-400 text-sm mt-2">Sign in to continue to yourDigital Library</p>
+            <div class="w-[330px] mt-12">
+                <p class="font-semibold text-sm">Email</p>
+                <input class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1" type="email" placeholder="Email">
+
+                <p class="font-semibold text-sm mt-5">Password</p>
+                <input class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1" type="password" placeholder="Password">
+                <button class="bg-yellow-400 text-white rounded-md w-full py-2 mt-12 text-sm font-semibold">
+                    Login
+                </button>
+
+                <p class="flex text-sm mt-10 text-gray-700 justify-center">New User? <span class="underline hover:text-yellow-600">Register Here</span></p>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

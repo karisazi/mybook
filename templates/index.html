@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="fixed right-5 left-3 flex justify-between items-center border-b-1 border-gray-100 shadow-sm bg-white">
@@ -354,9 +354,9 @@
     
         <!-- Middle Column -->
 
-        <div class="grid grid-cols-1 gap-4 font-sans-auto h-96">
+        <div class="flex flex-col font-sans-auto pt-10 pb-5">
             <!-- Book 1 -->
-            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 mt-10 hover:bg-gray-50">
+            <div class="flex shadow-md p-2 max-w-2xl h-56 flex-shrink-0 hover:bg-gray-50">
                 <img class="w-36 h-52 shadow-sm" src="{% static 'assets/book-1.jpg' %}" alt="Book Image">
                 <div class="flex flex-col justify-between p-5 flex-grow">
                     <div class="flex justify-between">

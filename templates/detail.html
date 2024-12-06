@@ -1,0 +1,205 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="fixed right-0 left-0 flex justify-between items-center border-b-1 border-gray-100 shadow-sm bg-white">
+        <img class="w-[130px] mx-5 my-4 flex-shrink-0" src="{% static 'assets/logo.png' %}">
+        <div class="w-[220px] flex flex-shrink-0 justify-between ml-8">
+            <p>Home</p>
+            <p>Favorite</p>
+            <p>Upload</p>
+        </div>
+
+        <!-- dropdown search box-->
+        <div class="flex-1 flex ml-14 mr-20 justify-center items-center max-w-[1000px] transition-all">
+            <!-- Dropdown Button -->
+            <div class="relative text-sm" id="dropdownButton">
+                <div onclick="toggleDropdown()" 
+                    class="w-[100px] flex justify-between items-center rounded-l-[200px] border-yellow-200 shadow-sm border-solid border-2 px-2 py-1 z-1 bg-yellow-50">
+                    <div class="flex-1 flex justify-center">
+                        <span id="dropdownLabel">All</span> <!-- Dropdown Label -->
+                    </div>
+                    <img width="8" src="{% static 'assets/svg-icon/arrow-down.svg' %}">
+                </div>
+                
+                <!-- Dropdown Menu -->
+                <div id="dropdown" 
+                    class="rounded border-[1px] border-gray-200 shadow-sm border-solid absolute top-[40px] hidden">
+                    <div onclick="selectOption('All')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">All</div>
+                    <div onclick="selectOption('Title')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Title</div>
+                    <div onclick="selectOption('Year')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Year</div>
+                    <div onclick="selectOption('Description')" class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Description</div>
+                </div>
+            </div>
+            
+            <!-- Input Field -->
+            <div class="relative w-full max-w-[500px]">
+                <!-- Input Field -->
+                <input 
+                    class="w-full px-4 py-1 text-sm 
+                           focus:outline-none focus:ring-2 focus:ring-yellow-100 
+                           shadow-sm border border-yellow-300 rounded-r-[200px] 
+                           focus:border-yellow-300 text-[13px] pr-10 border-l-0 focus:border-l-2"
+                    type="text" 
+                    placeholder="Search">
+                
+                <!-- Search Icon -->
+                <img 
+                    class="absolute right-4 top-1/2 transform -translate-y-1/2" 
+                    width="16" 
+                    src="{% static 'assets/svg-icon/search-icon.svg' %}" 
+                    alt="Search Icon">
+            </div>
+            
+        </div>
+
+        <div class="flex items-center">
+            <img class="w-[32px] h-[32px] rounded-full flex-shrink-0 z-10" src="{% static 'assets/blank-profile-picture.png' %}">
+            <div class="relative text-sm " id="userDropdownButton">
+                <div onclick="toggleUserDropdown()" 
+                    class="flex justify-between border-solid border-gray-200 border-2 rounded-r-[200px] px-4 py-1 -ml-[10px]  mr-5 duration-200">
+                    <span id="dropdownLabel">User</span> <!-- Dropdown Label -->
+                    <img class="ml-2" width="8" src="{% static 'assets/logo.png' %} ../media/svg-icon/arrow-down.svg">
+                </div>
+                
+                <!-- Dropdown Menu -->
+                <div id="userdropdown" 
+                    class="rounded border-[1px] border-gray-200 border-solid absolute top-[40px] shadow-sm hidden">
+                    <div class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Profile</div>
+                    <div class="cursor-pointer hover:bg-gray-200 px-[5px] py-[1px] w-[105px]">Logout</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="grid grid-cols-[400px_1fr_300px] pt-20 justify-center">
+        <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center w-[400px] flex-shrink-0">
+                    <div class="bg-yellow-400 rounded-full w-56 h-56 mt-32 relative">
+                        <img class="w-40 absolute left-8 -top-2 transition-transform transform active:scale-150 hover:scale-125 focus:outline-none" src="{% static 'assets/book-1.jpg' %}">
+                        <p class="text-[10px] font-semibold text-gray-500 mt-60 ml-20">Tap to enlarge</p>
+                    </div>
+                    <button class="w-36 rounded-md border-yellow-500 border-2 px-4 py-1 mt-28 bg-white text-yellow-500 text-sm font-semibold hover:bg-yellow-500 hover:text-white transition-colors">
+                        Edit
+                    </button>
+                    <button class="w-36 rounded-md border-yellow-500 border-2 px-4 py-1 mt-2 bg-white text-yellow-500 text-sm font-semibold hover:bg-yellow-500 hover:text-white transition-colors">
+                        Delete
+                    </button>
+                    <button class="w-36 rounded-md border-yellow-500 border-2 px-4 py-1 mt-2 bg-white text-yellow-500 text-sm font-semibold hover:bg-yellow-500 hover:text-white transition-colors">
+                        Analyze
+                    </button>
+                </div>
+        </div>
+
+
+        <div class="flex-1 flex flex-col p-16 font-sans">
+            <div class="flex justify-between">
+                <p class="font-semibold text-2xl text-gray-900">
+                    You Are a Badass: How to Stop Doubting Your Greatness and Start Living an Awesome Life
+                </p>
+                <img class="ml-5 active:-red-600" width="30" src="{% static 'assets/svg-icon/heart-icon.svg' %}" alt="Heart Icon">
+            </div>
+            <p class="text-sm mt-2 text-gray-800">by 
+                <span class="font-bold ml-1 uppercase">Jen Sincero</span>
+            </p>
+            <div class="mt-10 pb-10 border-b-2 border-gray-200 ">
+                <p id="limited-text" class="text-gray-900">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum aut voluptate excepturi voluptatem. Nam, dolorum ab? Obcaecati quasi atque, sunt facilis enim in molestias! Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis vero illo qui ducimus illum quas itaque saepe, ratione nostrum. Consectetur at dicta corporis recusandae illum quibusdam esse reiciendis, beatae adipisci! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi sit nesciunt quos debitis libero! Nesciunt modi aliquam molestiae doloremque dolores recusandae mollitia est natus sequi, vero, odit eaque saepe pariatur?
+                    <span id="extra-text" class="hidden">
+                        Temporibus quasi ducimus nobis iure, maxime illum quo officiis consequuntur accusamus reiciendis fuga amet enim! Deleniti pariatur ipsam magnam autem iste nisi necessitatibus quis laborum, atque neque repudiandae soluta in dicta ex inventore ea quas architecto consequuntur debitis eligendi. Sint itaque tempora ipsa esse excepturi repudiandae cumque quam! Dolorem totam voluptatem quisquam velit aspernatur unde porro repellendus dignissimos, nostrum necessitatibus ratione, ad facilis placeat nihil veniam sit? Dolore nihil pariatur, veniam tenetur laudantium est laboriosam omnis.
+                    </span>
+                </p>
+                <button id="read-more-btn" class="text-blue-500 mt-2">Read More</button>
+            </div>
+
+
+            <div class="grid grid-cols-[180px_1fr] mb-2 mt-8 text-sm">
+                <p class="font-semibold">Title</p>
+                <p>You Are a Badass: How to Stop Doubting Your Greatness and Start Living an Awesome Life</p>
+            </div>
+            <div class="grid grid-cols-[180px_1fr] mb-2 text-sm">
+                <p class="font-semibold">Writer</p>
+                <p>Jen Sincero</p>
+            </div>
+            <div class="grid grid-cols-[180px_1fr] mb-2 text-sm">
+                <p class="font-semibold">Genre</p>
+                <p>Personal Development</p>
+            </div>
+            <div class="grid grid-cols-[180px_1fr] mb-2 text-sm">
+                <p class="font-semibold">Pages</p>
+                <p>356</p>
+            </div>
+            <div class="grid grid-cols-[180px_1fr] mb-2 text-sm">
+                <p class="font-semibold">Characters</p>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis, officia!</p>
+            </div>
+        </div>
+
+
+        <!-- right section -->
+         <div class="flex flex-col border-l-2 border-gray-100 pl-5">
+            <div class="flex justify-center p-5">
+                <div class="p-1 border-2 border-gray-200">
+                    <img class="w-18 h-28" src="{% static 'assets/book-2.jpg' %}">
+                </div>
+
+                <div class="flex-1 ml-3 mt-5 text-sm">
+                    <p class="font-semibold">Winter in Tokyo</p>
+                    <p>Ilana Tan</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center p-5">
+                <div class="p-1 border-2 border-gray-200">
+                    <img class="w-18 h-28" src="{% static 'assets/book-3.jpg' %}">
+                </div>
+
+                <div class="flex-1 ml-3 mt-5 text-sm">
+                    <p class="font-semibold">Summer in Seoul</p>
+                    <p>Ilana Tan</p>
+                </div>
+            </div>
+
+            <div class="flex justify-center p-5">
+                <div class="p-1 border-2 border-gray-200">
+                    <img class="w-18 h-28" src="{% static 'assets/book-2.jpg' %}">
+                </div>
+
+                <div class="flex-1 ml-3 mt-5 text-sm">
+                    <p class="font-semibold">Winter in Tokyo</p>
+                    <p>Ilana Tan</p>
+                </div>
+            </div>
+         </div>
+
+    </div>
+
+
+
+    <script>
+        document.getElementById('read-more-btn').addEventListener('click', function () {
+            const extraText = document.getElementById('extra-text');
+            const btn = document.getElementById('read-more-btn');
+            
+            if (extraText.classList.contains('hidden')) {
+                extraText.classList.remove('hidden');
+                btn.textContent = 'Read Less';
+            } else {
+                extraText.classList.add('hidden');
+                btn.textContent = 'Read More';
+            }
+        });
+        
+    </script>
+
+</body>
+</html>

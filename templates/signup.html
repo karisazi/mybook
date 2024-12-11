@@ -1,0 +1,58 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp &middot; MyBooK</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="h-screen w-screen bg-cover bg-center" 
+    style="background-size: cover; background-repeat: no-repeat; background-position: center; background-image: url('{% static 'assets/bg/bg1.jpg' %}');">
+    <div class="flex items-center justify-center h-screen">
+        <div class="flex:1 flex flex-col shadow-lg hover:shadow-xl rounded-md bg-white p-10 items-center w-[400px] h-[630px]">
+            <img class="w-[170px]" src="{% static 'assets/logo.png' %}" alt="Logo">
+            <p class="font-semibold mt-8 text-gray-600 text-md">Registration</p>
+            <p class="text-gray-400 text-sm mt-2">For anyone who wants knowledge</p>
+            <div class="w-[330px] mt-8">
+                <div>
+                    <style>
+                        h5{
+                            color:red
+                        }
+                    </style>
+                    {% for message in messages %}
+                    <h5>{{message}}</h5>
+                    {% endfor %}
+                </div>        
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <p class="font-semibold text-sm">Username</p>
+                    <input type="text" name="username" placeholder="Username" class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1">
+
+                    <p class="font-semibold text-sm mt-2">Email</p>
+                    <input type="email" name="email" placeholder="Email" class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1">
+
+                    <p class="font-semibold text-sm mt-2">Password</p>
+                    <input type="password" name="password" placeholder="Password" class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1">
+
+                    <p class="font-semibold text-sm mt-2">Confirm Password</p>
+                    <input type="password" name="password2" placeholder="Confirm Password" class="border-2 rounded-md px-3 py-2 w-[330px] text-sm mt-1">
+                    <button class="bg-yellow-400 text-white rounded-md w-full py-2 mt-8 text-sm font-semibold">
+                        Register
+                    </button>
+
+                    <p class="text-sm mt-5 text-gray-700 flex justify-center">Already a User? <a href="/signin" class="underline hover:text-yellow-600 ml-1">Login now</a></p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</body>
+</html>
